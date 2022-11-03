@@ -1,0 +1,13 @@
+# Spring Boot Multiple DataSources
+
+一个轻量的多数据源实现
+
+使用org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource作为主数据源，
+AbstractRoutingDataSource配置多个候选的数据源，当需要获取连接时，通过determineCurrentLookupKey
+方法获取指定的Key，返回对应的数据源
+
+这里使用一个简单的DataSourceContextHolder，以ThreadLocal保存当前使用的Key，配合DataSource标注，
+指定当前需要的数据源Key即可
+
+注意：AbstractRoutingDataSource应指定一个默认的数据源，应对没有指定的情况。
+同时，ThreadLocal中保存的Key，使用后应及时清理，避免污染后续的操作。
